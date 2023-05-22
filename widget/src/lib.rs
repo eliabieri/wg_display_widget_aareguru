@@ -14,7 +14,7 @@ struct WidgetConfig {
     city: String,
 }
 
-const WIDGET_NAME: &str = "Rust Widget Template";
+const WIDGET_NAME: &str = "Aareguru";
 
 struct MyWidget;
 
@@ -24,13 +24,9 @@ impl Widget for MyWidget {
     }
 
     fn run(context: WidgetContext) -> WidgetResult {
-        // Widgets can log to the console
-        logging::log(logging::Level::Info, WIDGET_NAME, "Widget run started");
-
-        // Widgets can handle the case where no config is provided
         if "{}" == context.config {
             return WidgetResult {
-                data: "No config provided".into(),
+                data: "You must configure a city".into(),
             };
         }
 
@@ -62,7 +58,7 @@ impl Widget for MyWidget {
 
         let data: Result<Value, Error> = serde_json::from_slice(response.bytes.as_slice());
         let result = match data {
-            Ok(data) => format!("Aare Temperature in {}: {} C", config.city, data["aare"]),
+            Ok(data) => format!("{}: {} °C", config.city.to_uppercase(), data["aare"]),
             Err(_) => "Response from AareGuru could not be parsed".into(),
         };
 
@@ -79,8 +75,7 @@ impl Widget for MyWidget {
     }
 
     fn get_run_update_cycle_seconds() -> u32 {
-        // This widget shall be updated every second
-        1
+        300
     }
 }
 
