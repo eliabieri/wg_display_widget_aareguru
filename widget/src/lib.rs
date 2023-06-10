@@ -58,7 +58,10 @@ impl Widget for MyWidget {
 
         let data: Result<Value, Error> = serde_json::from_slice(response.bytes.as_slice());
         let result = match data {
-            Ok(data) => format!("{}: {} °C", config.city.to_uppercase(), data["aare"]),
+            Ok(data) => format!(
+                "{}: {}°C ({})",
+                config.city, data["aare"], data["text_short"]
+            ),
             Err(_) => "Response from AareGuru could not be parsed".into(),
         };
 
