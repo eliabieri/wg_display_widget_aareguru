@@ -4,6 +4,8 @@ use serde_json::Value;
 use schemars::{schema_for, JsonSchema};
 use serde::Deserialize;
 
+use widget::widget::http;
+
 wit_bindgen::generate!({
     path: "../wg_display_widget_wit/wit",
     world: "widget"
